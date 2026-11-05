@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
 import '../../theme/app_theme.dart';
 import 'auth_widgets.dart';
 import 'register_page.dart';
@@ -14,6 +15,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
+
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -37,11 +39,11 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void forgotPassword() {
+    final controller = TextEditingController();
+
     showDialog(
       context: context,
-      builder: (context) {
-        final controller = TextEditingController();
-
+      builder: (dialogContext) {
         return AlertDialog(
           backgroundColor: AppColors.card,
           title: const Text(
@@ -59,16 +61,15 @@ class _LoginPageState extends State<LoginPage> {
           actions: [
             TextButton(
               onPressed: () {
-                controller.dispose();
-                Navigator.pop(context);
+                Navigator.pop(dialogContext);
               },
               child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
                 final email = controller.text.trim();
-                controller.dispose();
-                Navigator.pop(context);
+                Navigator.pop(dialogContext);
+
                 showMessage(
                   email.isEmpty
                       ? 'Please enter your email.'
@@ -80,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
           ],
         );
       },
-    );
+    ).then((_) => controller.dispose());
   }
 
   @override
@@ -165,6 +166,7 @@ class _LoginPageState extends State<LoginPage> {
 
                 const SizedBox(height: 25),
 
+                // Email Field
                 AuthTextField(
                   hint: 'Enter your email',
                   icon: Icons.mail_outline,
@@ -174,17 +176,20 @@ class _LoginPageState extends State<LoginPage> {
                     if (value == null || value.trim().isEmpty) {
                       return 'Please enter your email';
                     }
+
                     if (!RegExp(
                       r'^[\w.+-]+@[\w-]+\.[\w.-]+$',
                     ).hasMatch(value.trim())) {
                       return 'Enter a valid email address';
                     }
+
                     return null;
                   },
                 ),
 
                 const SizedBox(height: 14),
 
+                // Password Field
                 AuthTextField(
                   hint: 'Enter your password',
                   icon: Icons.lock_outline,
@@ -194,13 +199,16 @@ class _LoginPageState extends State<LoginPage> {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your password';
                     }
+
                     if (value.length < 6) {
                       return 'Password must be at least 6 characters';
                     }
+
                     return null;
                   },
                 ),
 
+                // Forgot Password
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
@@ -217,6 +225,7 @@ class _LoginPageState extends State<LoginPage> {
 
                 const SizedBox(height: 8),
 
+                // Login Button
                 AuthButton(
                   title: 'Log In',
                   onPressed: login,
@@ -224,9 +233,12 @@ class _LoginPageState extends State<LoginPage> {
 
                 const SizedBox(height: 25),
 
+                // Divider
                 const Row(
                   children: [
-                    Expanded(child: Divider(color: AppColors.border)),
+                    Expanded(
+                      child: Divider(color: AppColors.border),
+                    ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 12),
                       child: Text(
@@ -234,13 +246,15 @@ class _LoginPageState extends State<LoginPage> {
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
-                    Expanded(child: Divider(color: AppColors.border)),
+                    Expanded(
+                      child: Divider(color: AppColors.border),
+                    ),
                   ],
                 ),
 
                 const SizedBox(height: 18),
 
-                // Google only - no Facebook
+                // Google Login Button - No Facebook
                 SizedBox(
                   height: 55,
                   width: double.infinity,
@@ -259,19 +273,16 @@ class _LoginPageState extends State<LoginPage> {
                         borderRadius: BorderRadius.circular(18),
                       ),
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          'G',
-                          style: TextStyle(
-                            color: Color(0xFF4285F4),
-                            fontSize: 27,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        SvgPicture.network(
+                          'https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg',
+                          width: 22,
+                          height: 22,
                         ),
-                        SizedBox(width: 12),
-                        Text(
+                        const SizedBox(width: 12),
+                        const Text(
                           'Continue with Google',
                           style: TextStyle(
                             color: Colors.white,
@@ -285,6 +296,7 @@ class _LoginPageState extends State<LoginPage> {
 
                 const SizedBox(height: 30),
 
+                // Register Navigation
                 Center(
                   child: Wrap(
                     alignment: WrapAlignment.center,
