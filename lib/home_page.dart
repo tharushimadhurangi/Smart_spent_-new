@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'theme/app_theme.dart';
 import 'tabs/dashboard_tab.dart';
+import 'wideget/custom_bottom_nav.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,32 +16,39 @@ class _HomePageState extends State<HomePage> {
 
   late final List<Widget> pages = [
     const DashboardTab(),
+
     const PlaceholderTab(
       title: 'Income',
       icon: Icons.trending_up_rounded,
     ),
+
     const PlaceholderTab(
-      title: 'Expenses',
+      title: 'Expense',
       icon: Icons.trending_down_rounded,
     ),
+
     const PlaceholderTab(
       title: 'Bills',
       icon: Icons.receipt_long_rounded,
     ),
+
     const PlaceholderTab(
       title: 'Goals',
       icon: Icons.flag_outlined,
     ),
+
     const PlaceholderTab(
-      title: 'Warranties',
+      title: 'Warranty',
       icon: Icons.verified_outlined,
     ),
   ];
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: theme.scaffoldBackgroundColor,
 
       body: SafeArea(
         bottom: false,
@@ -50,50 +58,19 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
 
-      bottomNavigationBar: NavigationBar(
+      bottomNavigationBar: CustomBottomNav(
         selectedIndex: selectedIndex,
-        backgroundColor: AppColors.card,
-        indicatorColor:
-            AppColors.primary.withValues(alpha: 0.25),
-        elevation: 0,
-        labelBehavior:
-            NavigationDestinationLabelBehavior.alwaysShow,
-        onDestinationSelected: (index) {
+        onItemSelected: (index) {
           setState(() {
             selectedIndex = index;
           });
         },
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home_rounded),
-            label: 'Home',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.trending_up_rounded),
-            label: 'Income',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.trending_down_rounded),
-            label: 'Expense',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.receipt_long_outlined),
-            label: 'Bills',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.flag_outlined),
-            label: 'Goals',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.verified_outlined),
-            label: 'Warranty',
-          ),
-        ],
       ),
     );
   }
 }
+
+// Placeholder pages for upcoming sections
 
 class PlaceholderTab extends StatelessWidget {
   final String title;
@@ -107,31 +84,46 @@ class PlaceholderTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: theme.scaffoldBackgroundColor,
+
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              icon,
-              size: 55,
-              color: AppColors.primary,
+            Container(
+              height: 85,
+              width: 85,
+              decoration: BoxDecoration(
+                color: AppColors.primary.withValues(alpha: 0.12),
+                borderRadius: BorderRadius.circular(25),
+              ),
+              child: Icon(
+                icon,
+                size: 42,
+                color: AppColors.primary,
+              ),
             ),
-            const SizedBox(height: 15),
+
+            const SizedBox(height: 20),
+
             Text(
               '$title Page',
-              style: const TextStyle(
-                color: AppColors.text,
+              style: TextStyle(
+                color: theme.colorScheme.onSurface,
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
               ),
             ),
+
             const SizedBox(height: 8),
-            const Text(
+
+            Text(
               'Coming Soon',
               style: TextStyle(
-                color: AppColors.mutedText,
+                color: theme.colorScheme.onSurfaceVariant,
                 fontSize: 14,
               ),
             ),

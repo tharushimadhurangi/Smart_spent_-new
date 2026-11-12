@@ -19,8 +19,16 @@ class AppColors {
 }
 
 class AppTheme {
-  static const LinearGradient primaryGradient =
-      LinearGradient(
+  static final ValueNotifier<ThemeMode> themeMode =
+      ValueNotifier<ThemeMode>(ThemeMode.dark);
+
+  static void toggleTheme() {
+    themeMode.value = themeMode.value == ThemeMode.dark
+        ? ThemeMode.light
+        : ThemeMode.dark;
+  }
+
+  static const LinearGradient primaryGradient = LinearGradient(
     colors: [
       AppColors.primary,
       AppColors.secondary,
@@ -50,7 +58,6 @@ class AppTheme {
         backgroundColor: AppColors.background,
         foregroundColor: AppColors.text,
         elevation: 0,
-        centerTitle: false,
       ),
 
       cardTheme: CardThemeData(
@@ -58,19 +65,14 @@ class AppTheme {
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(18),
-          side: const BorderSide(
-            color: AppColors.border,
-          ),
+          side: const BorderSide(color: AppColors.border),
         ),
       ),
 
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.input,
-        hintStyle: const TextStyle(
-          color: AppColors.mutedText,
-          fontSize: 14,
-        ),
+        hintStyle: const TextStyle(color: AppColors.mutedText),
         prefixIconColor: AppColors.mutedText,
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
@@ -78,15 +80,11 @@ class AppTheme {
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
-          borderSide: const BorderSide(
-            color: AppColors.border,
-          ),
+          borderSide: const BorderSide(color: AppColors.border),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
-          borderSide: const BorderSide(
-            color: AppColors.border,
-          ),
+          borderSide: const BorderSide(color: AppColors.border),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
@@ -111,12 +109,6 @@ class AppTheme {
       navigationBarTheme: const NavigationBarThemeData(
         backgroundColor: AppColors.card,
         indicatorColor: Color(0xFF352064),
-        labelTextStyle: WidgetStatePropertyAll(
-          TextStyle(
-            color: AppColors.mutedText,
-            fontSize: 12,
-          ),
-        ),
       ),
 
       dividerTheme: const DividerThemeData(
@@ -141,12 +133,114 @@ class AppTheme {
           color: AppColors.text,
           fontWeight: FontWeight.w600,
         ),
-        bodyLarge: TextStyle(
-          color: AppColors.text,
+        bodyLarge: TextStyle(color: AppColors.text),
+        bodyMedium: TextStyle(color: AppColors.mutedText),
+      ),
+    );
+  }
+
+  static ThemeData get lightTheme {
+    const lightBackground = Color(0xFFF5F6FC);
+    const lightCard = Colors.white;
+    const lightText = Color(0xFF172033);
+    const lightMuted = Color(0xFF65708A);
+    const lightBorder = Color(0xFFE1E5F0);
+
+    return ThemeData(
+      useMaterial3: true,
+      brightness: Brightness.light,
+      scaffoldBackgroundColor: lightBackground,
+      primaryColor: AppColors.primary,
+      fontFamily: 'Roboto',
+
+      colorScheme: const ColorScheme.light(
+        primary: AppColors.primary,
+        secondary: AppColors.secondary,
+        surface: lightCard,
+        error: AppColors.error,
+        onPrimary: Colors.white,
+        onSurface: lightText,
+      ),
+
+      appBarTheme: const AppBarTheme(
+        backgroundColor: lightBackground,
+        foregroundColor: lightText,
+        elevation: 0,
+      ),
+
+      cardTheme: CardThemeData(
+        color: lightCard,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(18),
+          side: const BorderSide(color: lightBorder),
         ),
-        bodyMedium: TextStyle(
-          color: AppColors.mutedText,
+      ),
+
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: const Color(0xFFF0F2F8),
+        hintStyle: const TextStyle(color: lightMuted),
+        prefixIconColor: lightMuted,
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 16,
         ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(color: lightBorder),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(color: lightBorder),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(
+            color: AppColors.secondary,
+            width: 1.5,
+          ),
+        ),
+      ),
+
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.primary,
+          foregroundColor: Colors.white,
+          minimumSize: const Size(double.infinity, 52),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+        ),
+      ),
+
+      navigationBarTheme: const NavigationBarThemeData(
+        backgroundColor: lightCard,
+        indicatorColor: Color(0xFFE9DFFF),
+      ),
+
+      dividerTheme: const DividerThemeData(
+        color: lightBorder,
+        thickness: 1,
+      ),
+
+      iconTheme: const IconThemeData(color: lightMuted),
+
+      textTheme: const TextTheme(
+        headlineLarge: TextStyle(
+          color: lightText,
+          fontWeight: FontWeight.bold,
+        ),
+        headlineMedium: TextStyle(
+          color: lightText,
+          fontWeight: FontWeight.bold,
+        ),
+        titleLarge: TextStyle(
+          color: lightText,
+          fontWeight: FontWeight.w600,
+        ),
+        bodyLarge: TextStyle(color: lightText),
+        bodyMedium: TextStyle(color: lightMuted),
       ),
     );
   }
