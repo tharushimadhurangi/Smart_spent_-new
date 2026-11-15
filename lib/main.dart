@@ -1,7 +1,8 @@
 
 import 'package:flutter/material.dart';
+
 import 'theme/app_theme.dart';
-import 'pages/auth/login_page.dart';
+import 'pages/onboarding/splash_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,16 +15,17 @@ class SmartSpentApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      // App Configuration
       debugShowCheckedModeBanner: false,
-      title: 'Smart Spent',
+      title: 'SmartSpend',
 
-      // Global Dark Navy & Purple Theme
+      // Global Theme
       theme: AppTheme.darkTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.dark,
 
-      // Initial Auth Screen
-      home: const LoginPage(),
+      // Initial Screen
+      home: const SplashScreen(),
     );
   }
 }
