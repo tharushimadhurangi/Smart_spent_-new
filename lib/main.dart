@@ -1,8 +1,9 @@
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'theme/app_theme.dart';
-import 'pages/onboarding/splash_screen.dart';
+import 'home_page.dart';
+import 'providers/transaction_provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,18 +15,28 @@ class SmartSpentApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      // App Configuration
-      debugShowCheckedModeBanner: false,
-      title: 'SmartSpend',
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => TransactionProvider()),
+      ],
+      child: ValueListenableBuilder<ThemeMode>(
+        valueListenable: AppTheme.themeMode,
+        builder: (context, currentMode, _) {
+          return MaterialApp(
+            // App Configuration
+            debugShowCheckedModeBanner: false,
+            title: 'SmartSpend',
 
-      // Global Theme
-      theme: AppTheme.darkTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.dark,
+            // Global Theme with dynamic mode toggle
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            themeMode: currentMode,
 
-      // Initial Screen
-      home: const SplashScreen(),
+            // Home Screen: Dashboard & Transaction Management
+            home: const HomePage(),
+          );
+        },
+      ),
     );
   }
 }
