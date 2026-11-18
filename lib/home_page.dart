@@ -3,8 +3,6 @@ import 'theme/app_theme.dart';
 import 'tabs/dashboard_tab.dart';
 import 'tabs/incomes_tab.dart';
 import 'tabs/expenses_tab.dart';
-import 'screens/transaction_form_sheet.dart';
-import 'models/category_model.dart';
 import 'wideget/custom_bottom_nav.dart';
 
 class HomePage extends StatefulWidget {
@@ -52,18 +50,6 @@ class _HomePageState extends State<HomePage> {
     ];
   }
 
-  void _onAddTransactionPressed() {
-    TransactionType defaultType = TransactionType.expense;
-    if (selectedIndex == 1) {
-      defaultType = TransactionType.income;
-    }
-
-    TransactionFormSheet.show(
-      context,
-      defaultType: defaultType,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -75,23 +61,6 @@ class _HomePageState extends State<HomePage> {
         child: IndexedStack(
           index: selectedIndex,
           children: pages,
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _onAddTransactionPressed,
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
-        elevation: 6,
-        tooltip: 'Add Transaction',
-        shape: const CircleBorder(),
-        child: Container(
-          width: 56,
-          height: 56,
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            gradient: AppTheme.primaryGradient,
-          ),
-          child: const Icon(Icons.add_rounded, size: 28),
         ),
       ),
       bottomNavigationBar: CustomBottomNav(
