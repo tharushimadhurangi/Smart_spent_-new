@@ -1,6 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:smart_spent_new/models/transaction_model.dart';
 import 'package:smart_spent_new/models/category_model.dart';
 import 'package:smart_spent_new/providers/transaction_provider.dart';
@@ -110,40 +109,6 @@ void main() {
       final expenseCat = TransactionCategory.getById('shopping');
       expect(expenseCat.type, equals(TransactionType.expense));
       expect(expenseCat.name, equals('Shopping'));
-    });
-
-    test('Firestore document serialization links transaction to user and stores all required fields', () {
-      final now = DateTime(2026, 11, 18, 10, 30);
-      final transaction = TransactionItem(
-        id: 'doc_tx_123',
-        userId: 'user_prabu_456',
-        title: 'Salary November',
-        description: 'Monthly Corporate Salary for November',
-        amount: 85000.0,
-        type: TransactionType.income,
-        categoryId: 'salary',
-        date: now,
-        paymentMethod: 'Bank Account',
-      );
-
-      final firestoreData = transaction.toFirestore();
-
-      expect(firestoreData['id'], equals('doc_tx_123'));
-      expect(firestoreData['userId'], equals('user_prabu_456'));
-      expect(firestoreData['amount'], equals(85000.0));
-      expect(firestoreData['category'], equals('Salary'));
-      expect(firestoreData['description'], equals('Monthly Corporate Salary for November'));
-      expect(firestoreData['date'], isA<Timestamp>());
-      expect((firestoreData['date'] as Timestamp).toDate(), equals(now));
-      expect(firestoreData['type'], equals('income'));
-
-      // Test deserialization from Firestore
-      final reconstituted = TransactionItem.fromFirestore(firestoreData, 'doc_tx_123');
-      expect(reconstituted.id, equals('doc_tx_123'));
-      expect(reconstituted.userId, equals('user_prabu_456'));
-      expect(reconstituted.amount, equals(85000.0));
-      expect(reconstituted.description, equals('Monthly Corporate Salary for November'));
-      expect(reconstituted.isIncome, isTrue);
     });
   });
 }

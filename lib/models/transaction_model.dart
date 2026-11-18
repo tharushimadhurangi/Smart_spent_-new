@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'category_model.dart';
 
 class TransactionItem {
@@ -135,7 +134,7 @@ class TransactionItem {
     );
   }
 
-  // SharedPreferences JSON serialization
+  // Local SharedPreferences JSON serialization
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -170,62 +169,6 @@ class TransactionItem {
       createdAt: json['createdAt'] != null
           ? DateTime.parse(json['createdAt'] as String)
           : DateTime.now(),
-    );
-  }
-
-  // Firestore Document serialization
-  Map<String, dynamic> toFirestore() {
-    return {
-      'id': id,
-      'userId': userId,
-      'amount': amount,
-      'category': category.name,
-      'categoryId': categoryId,
-      'description': description.isNotEmpty ? description : title,
-      'title': title,
-      'date': Timestamp.fromDate(date),
-      'type': type == TransactionType.income ? 'income' : 'expense',
-      'paymentMethod': paymentMethod,
-      'notes': notes ?? '',
-      'createdAt': Timestamp.fromDate(createdAt),
-    };
-  }
-
-  factory TransactionItem.fromFirestore(Map<String, dynamic> data, String docId) {
-    DateTime parsedDate;
-    if (data['date'] is Timestamp) {
-      parsedDate = (data['date'] as Timestamp).toDate();
-    } else if (data['date'] is String) {
-      parsedDate = DateTime.tryParse(data['date'] as String) ?? DateTime.now();
-    } else {
-      parsedDate = DateTime.now();
-    }
-
-    DateTime parsedCreatedAt;
-    if (data['createdAt'] is Timestamp) {
-      parsedCreatedAt = (data['createdAt'] as Timestamp).toDate();
-    } else if (data['createdAt'] is String) {
-      parsedCreatedAt = DateTime.tryParse(data['createdAt'] as String) ?? DateTime.now();
-    } else {
-      parsedCreatedAt = DateTime.now();
-    }
-
-    final typeStr = (data['type'] as String?)?.toLowerCase() ?? 'expense';
-    final type = typeStr == 'income' ? TransactionType.income : TransactionType.expense;
-    final desc = (data['description'] as String?) ?? (data['title'] as String?) ?? '';
-
-    return TransactionItem(
-      id: docId,
-      userId: (data['userId'] as String?) ?? 'default_user',
-      title: (data['title'] as String?) ?? desc,
-      description: desc,
-      amount: (data['amount'] as num?)?.toDouble() ?? 0.0,
-      type: type,
-      categoryId: (data['categoryId'] as String?) ?? 'others',
-      date: parsedDate,
-      paymentMethod: (data['paymentMethod'] as String?) ?? 'Bank Account',
-      notes: data['notes'] as String?,
-      createdAt: parsedCreatedAt,
     );
   }
 }

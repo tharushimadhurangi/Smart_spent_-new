@@ -175,7 +175,7 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
                       : ListView.separated(
                           padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
                           itemCount: items.length,
-                          separatorBuilder: (_, _) => const SizedBox(height: 12),
+                          separatorBuilder: (context, index) => const SizedBox(height: 12),
                           itemBuilder: (context, index) {
                             final tx = items[index];
                             final cat = tx.category;

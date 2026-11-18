@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import '../models/transaction_model.dart';
 import '../services/transaction_storage.dart';
-import '../services/firestore_transaction_service.dart';
 
 enum TimePeriodFilter {
   allTime,
@@ -11,13 +10,11 @@ enum TimePeriodFilter {
 }
 
 class TransactionProvider extends ChangeNotifier {
-  final FirestoreTransactionService _firestoreService;
   List<TransactionItem> _transactions = [];
   bool _isLoading = true;
   double _weeklyBudget = 20000.00;
 
-  TransactionProvider({FirestoreTransactionService? firestoreService})
-      : _firestoreService = firestoreService ?? FirestoreTransactionService() {
+  TransactionProvider() {
     _loadFromStorage();
   }
 
@@ -42,22 +39,6 @@ class TransactionProvider extends ChangeNotifier {
     } finally {
       _isLoading = false;
       notifyListeners();
-    }
-
-    // Background sync from Firestore if connected
-    _syncFromFirestore();
-  }
-
-  Future<void> _syncFromFirestore() async {
-    try {
-      final cloudItems = await _firestoreService.fetchAllTransactions();
-      if (cloudItems.isNotEmpty) {
-        _transactions = cloudItems;
-        await TransactionStorage.saveTransactions(_transactions);
-        notifyListeners();
-      }
-    } catch (e) {
-      debugPrint('Firestore background sync skipped: $e');
     }
   }
 
@@ -167,16 +148,11 @@ class TransactionProvider extends ChangeNotifier {
     return map;
   }
 
-  // CRUD Operations with dual local + Firestore persistence
+  // CRUD Operations
   Future<void> addTransaction(TransactionItem item) async {
     _transactions.insert(0, item);
     notifyListeners();
     await TransactionStorage.saveTransactions(_transactions);
-    try {
-      await _firestoreService.addTransaction(item);
-    } catch (e) {
-      debugPrint('Firestore sync skipped: $e');
-    }
   }
 
   Future<void> updateTransaction(TransactionItem item) async {
@@ -185,26 +161,13 @@ class TransactionProvider extends ChangeNotifier {
       _transactions[index] = item;
       notifyListeners();
       await TransactionStorage.saveTransactions(_transactions);
-      try {
-        await _firestoreService.updateTransaction(item);
-      } catch (e) {
-        debugPrint('Firestore update sync skipped: $e');
-      }
     }
   }
 
   Future<void> deleteTransaction(String id) async {
-    final item = getById(id);
     _transactions.removeWhere((t) => t.id == id);
     notifyListeners();
     await TransactionStorage.saveTransactions(_transactions);
-    if (item != null) {
-      try {
-        await _firestoreService.deleteTransaction(id, item.type);
-      } catch (e) {
-        debugPrint('Firestore delete sync skipped: $e');
-      }
-    }
   }
 
   Future<void> restoreTransaction(TransactionItem item, int originalIndex) async {
@@ -215,11 +178,6 @@ class TransactionProvider extends ChangeNotifier {
     }
     notifyListeners();
     await TransactionStorage.saveTransactions(_transactions);
-    try {
-      await _firestoreService.addTransaction(item);
-    } catch (e) {
-      debugPrint('Firestore restore sync skipped: $e');
-    }
   }
 
   TransactionItem? getById(String id) {

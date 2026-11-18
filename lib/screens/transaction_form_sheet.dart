@@ -508,7 +508,7 @@ class _TransactionFormSheetState extends State<TransactionFormSheet> {
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   itemCount: categories.length,
-                  separatorBuilder: (_, _) => const SizedBox(width: 10),
+                  separatorBuilder: (context, index) => const SizedBox(width: 10),
                   itemBuilder: (context, index) {
                     final cat = categories[index];
                     final isSelected = cat.id == _selectedCategoryId;
