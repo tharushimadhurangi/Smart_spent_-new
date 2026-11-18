@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'category_model.dart';
 
 class TransactionItem {
   final String id;
+  final String userId;
   final String title;
+  final String description;
   final double amount;
   final TransactionType type;
   final String categoryId;
@@ -13,7 +16,9 @@ class TransactionItem {
 
   TransactionItem({
     required this.id,
+    this.userId = 'default_user',
     required this.title,
+    String? description,
     required this.amount,
     required this.type,
     required this.categoryId,
@@ -21,7 +26,8 @@ class TransactionItem {
     this.paymentMethod = 'Bank Account',
     this.notes,
     DateTime? createdAt,
-  }) : createdAt = createdAt ?? DateTime.now();
+  })  : description = description ?? title,
+        createdAt = createdAt ?? DateTime.now();
 
   bool get isIncome => type == TransactionType.income;
   bool get isExpense => type == TransactionType.expense;
@@ -103,7 +109,9 @@ class TransactionItem {
 
   TransactionItem copyWith({
     String? id,
+    String? userId,
     String? title,
+    String? description,
     double? amount,
     TransactionType? type,
     String? categoryId,
@@ -114,7 +122,9 @@ class TransactionItem {
   }) {
     return TransactionItem(
       id: id ?? this.id,
+      userId: userId ?? this.userId,
       title: title ?? this.title,
+      description: description ?? this.description,
       amount: amount ?? this.amount,
       type: type ?? this.type,
       categoryId: categoryId ?? this.categoryId,
@@ -125,10 +135,13 @@ class TransactionItem {
     );
   }
 
+  // SharedPreferences JSON serialization
   Map<String, dynamic> toJson() {
     return {
       'id': id,
+      'userId': userId,
       'title': title,
+      'description': description,
       'amount': amount,
       'type': type == TransactionType.income ? 'income' : 'expense',
       'categoryId': categoryId,
@@ -140,9 +153,12 @@ class TransactionItem {
   }
 
   factory TransactionItem.fromJson(Map<String, dynamic> json) {
+    final desc = (json['description'] as String?) ?? (json['title'] as String?) ?? '';
     return TransactionItem(
       id: json['id'] as String,
-      title: json['title'] as String,
+      userId: (json['userId'] as String?) ?? 'default_user',
+      title: (json['title'] as String?) ?? desc,
+      description: desc,
       amount: (json['amount'] as num).toDouble(),
       type: json['type'] == 'income'
           ? TransactionType.income
@@ -154,6 +170,62 @@ class TransactionItem {
       createdAt: json['createdAt'] != null
           ? DateTime.parse(json['createdAt'] as String)
           : DateTime.now(),
+    );
+  }
+
+  // Firestore Document serialization
+  Map<String, dynamic> toFirestore() {
+    return {
+      'id': id,
+      'userId': userId,
+      'amount': amount,
+      'category': category.name,
+      'categoryId': categoryId,
+      'description': description.isNotEmpty ? description : title,
+      'title': title,
+      'date': Timestamp.fromDate(date),
+      'type': type == TransactionType.income ? 'income' : 'expense',
+      'paymentMethod': paymentMethod,
+      'notes': notes ?? '',
+      'createdAt': Timestamp.fromDate(createdAt),
+    };
+  }
+
+  factory TransactionItem.fromFirestore(Map<String, dynamic> data, String docId) {
+    DateTime parsedDate;
+    if (data['date'] is Timestamp) {
+      parsedDate = (data['date'] as Timestamp).toDate();
+    } else if (data['date'] is String) {
+      parsedDate = DateTime.tryParse(data['date'] as String) ?? DateTime.now();
+    } else {
+      parsedDate = DateTime.now();
+    }
+
+    DateTime parsedCreatedAt;
+    if (data['createdAt'] is Timestamp) {
+      parsedCreatedAt = (data['createdAt'] as Timestamp).toDate();
+    } else if (data['createdAt'] is String) {
+      parsedCreatedAt = DateTime.tryParse(data['createdAt'] as String) ?? DateTime.now();
+    } else {
+      parsedCreatedAt = DateTime.now();
+    }
+
+    final typeStr = (data['type'] as String?)?.toLowerCase() ?? 'expense';
+    final type = typeStr == 'income' ? TransactionType.income : TransactionType.expense;
+    final desc = (data['description'] as String?) ?? (data['title'] as String?) ?? '';
+
+    return TransactionItem(
+      id: docId,
+      userId: (data['userId'] as String?) ?? 'default_user',
+      title: (data['title'] as String?) ?? desc,
+      description: desc,
+      amount: (data['amount'] as num?)?.toDouble() ?? 0.0,
+      type: type,
+      categoryId: (data['categoryId'] as String?) ?? 'others',
+      date: parsedDate,
+      paymentMethod: (data['paymentMethod'] as String?) ?? 'Bank Account',
+      notes: data['notes'] as String?,
+      createdAt: parsedCreatedAt,
     );
   }
 }

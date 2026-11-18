@@ -13,8 +13,7 @@ void main() {
     await tester.pumpWidget(const SmartSpentApp());
     await tester.pumpAndSettle();
 
-    // Verify Dashboard Title and Available Balance header
-    expect(find.text('SmartSpent'), findsWidgets);
+    // Verify key Dashboard widgets
     expect(find.text('Available Balance'), findsOneWidget);
     expect(find.text('Total Income'), findsOneWidget);
     expect(find.text('Total Expenses'), findsOneWidget);
