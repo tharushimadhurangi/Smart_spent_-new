@@ -1,7 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'theme/app_theme.dart';
 import 'tabs/dashboard_tab.dart';
+import 'tabs/incomes_tab.dart';
+import 'tabs/expenses_tab.dart';
 import 'wideget/custom_bottom_nav.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,34 +15,40 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int selectedIndex = 0;
 
-  late final List<Widget> pages = [
-    const DashboardTab(),
+  late final List<Widget> pages;
 
-    const PlaceholderTab(
-      title: 'Income',
-      icon: Icons.trending_up_rounded,
-    ),
+  @override
+  void initState() {
+    super.initState();
+    pages = [
+      DashboardTab(
+        onNavigateTab: (index) {
+          setState(() {
+            selectedIndex = index;
+          });
+        },
+      ),
 
-    const PlaceholderTab(
-      title: 'Expense',
-      icon: Icons.trending_down_rounded,
-    ),
+      const IncomesTab(),
 
-    const PlaceholderTab(
-      title: 'Bills',
-      icon: Icons.receipt_long_rounded,
-    ),
+      const ExpensesTab(),
 
-    const PlaceholderTab(
-      title: 'Goals',
-      icon: Icons.flag_outlined,
-    ),
+      const PlaceholderTab(
+        title: 'Bills',
+        icon: Icons.receipt_long_rounded,
+      ),
 
-    const PlaceholderTab(
-      title: 'Warranty',
-      icon: Icons.verified_outlined,
-    ),
-  ];
+      const PlaceholderTab(
+        title: 'Goals',
+        icon: Icons.flag_outlined,
+      ),
+
+      const PlaceholderTab(
+        title: 'Warranty',
+        icon: Icons.verified_outlined,
+      ),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +56,6 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
-
       body: SafeArea(
         bottom: false,
         child: IndexedStack(
@@ -57,7 +63,6 @@ class _HomePageState extends State<HomePage> {
           children: pages,
         ),
       ),
-
       bottomNavigationBar: CustomBottomNav(
         selectedIndex: selectedIndex,
         onItemSelected: (index) {
@@ -71,7 +76,6 @@ class _HomePageState extends State<HomePage> {
 }
 
 // Placeholder pages for upcoming sections
-
 class PlaceholderTab extends StatelessWidget {
   final String title;
   final IconData icon;
@@ -88,7 +92,6 @@ class PlaceholderTab extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
-
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -106,9 +109,7 @@ class PlaceholderTab extends StatelessWidget {
                 color: AppColors.primary,
               ),
             ),
-
             const SizedBox(height: 20),
-
             Text(
               '$title Page',
               style: TextStyle(
@@ -117,9 +118,7 @@ class PlaceholderTab extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-
             const SizedBox(height: 8),
-
             Text(
               'Coming Soon',
               style: TextStyle(
