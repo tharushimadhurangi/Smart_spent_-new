@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../theme/app_theme.dart';
 import 'auth_widgets.dart';
@@ -19,6 +19,8 @@ class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+  bool isLoading = false;
+
   @override
   void dispose() {
     emailController.dispose();
@@ -27,21 +29,55 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void showMessage(String message) {
+    if (!mounted) return;
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text(message)),
     );
   }
 
-  void login() {
-    if (_formKey.currentState!.validate()) {
-      showMessage('Login API will be connected soon.');
+  Future<void> login() async {
+    if (!_formKey.currentState!.validate()) return;
+    if (isLoading) return;
+
+    setState(() => isLoading = true);
+
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text,
+      );
+
+      // AuthGate automatically opens HomePage.
+    } on FirebaseAuthException catch (e) {
+      String message = 'Login failed. Please try again.';
+
+      if (e.code == 'invalid-email') {
+        message = 'Please enter a valid email address.';
+      } else if (e.code == 'invalid-credential' ||
+          e.code == 'wrong-password' ||
+          e.code == 'user-not-found') {
+        message = 'Incorrect email or password.';
+      } else if (e.code == 'too-many-requests') {
+        message = 'Too many attempts. Try again later.';
+      } else if (e.code == 'network-request-failed') {
+        message = 'Please check your internet connection.';
+      }
+
+      showMessage(message);
+    } catch (e) {
+      showMessage('Something went wrong. Please try again.');
+    } finally {
+      if (mounted) {
+        setState(() => isLoading = false);
+      }
     }
   }
 
-  void forgotPassword() {
+  Future<void> forgotPassword() async {
     final controller = TextEditingController();
 
-    showDialog(
+    final email = await showDialog<String>(
       context: context,
       builder: (dialogContext) {
         return AlertDialog(
@@ -60,28 +96,50 @@ class _LoginPageState extends State<LoginPage> {
           ),
           actions: [
             TextButton(
-              onPressed: () {
-                Navigator.pop(dialogContext);
-              },
+              onPressed: () => Navigator.pop(dialogContext),
               child: const Text('Cancel'),
             ),
             TextButton(
-              onPressed: () {
-                final email = controller.text.trim();
-                Navigator.pop(dialogContext);
-
-                showMessage(
-                  email.isEmpty
-                      ? 'Please enter your email.'
-                      : 'Password reset API will be connected soon.',
-                );
-              },
+              onPressed: () => Navigator.pop(
+                dialogContext,
+                controller.text.trim(),
+              ),
               child: const Text('Submit'),
             ),
           ],
         );
       },
-    ).then((_) => controller.dispose());
+    );
+
+    // Controller no longer needed after dialog.
+    controller.dispose();
+
+    if (!mounted || email == null) return;
+
+    if (!RegExp(
+      r'^[\w.+-]+@[\w-]+\.[\w.-]+$',
+    ).hasMatch(email)) {
+      showMessage('Please enter a valid email.');
+      return;
+    }
+
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(
+        email: email,
+      );
+
+      showMessage(
+        'If an account exists, a reset email will be sent.',
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'invalid-email') {
+        showMessage('Invalid email address.');
+      } else {
+        showMessage('Unable to send reset email.');
+      }
+    } catch (e) {
+      showMessage('Unable to send reset email.');
+    }
   }
 
   @override
@@ -99,8 +157,6 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 10),
-
-                // SmartSpend Logo
                 const Center(
                   child: Column(
                     children: [
@@ -142,9 +198,7 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
-
                 const SizedBox(height: 38),
-
                 const Text(
                   'Log In',
                   style: TextStyle(
@@ -153,9 +207,7 @@ class _LoginPageState extends State<LoginPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-
                 const SizedBox(height: 7),
-
                 const Text(
                   'Welcome back! Please log in to your account.',
                   style: TextStyle(
@@ -163,10 +215,7 @@ class _LoginPageState extends State<LoginPage> {
                     fontSize: 14,
                   ),
                 ),
-
                 const SizedBox(height: 25),
-
-                // Email Field
                 AuthTextField(
                   hint: 'Enter your email',
                   icon: Icons.mail_outline,
@@ -186,10 +235,7 @@ class _LoginPageState extends State<LoginPage> {
                     return null;
                   },
                 ),
-
                 const SizedBox(height: 14),
-
-                // Password Field
                 AuthTextField(
                   hint: 'Enter your password',
                   icon: Icons.lock_outline,
@@ -207,8 +253,6 @@ class _LoginPageState extends State<LoginPage> {
                     return null;
                   },
                 ),
-
-                // Forgot Password
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
@@ -222,18 +266,17 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 8),
-
-                // Login Button
-                AuthButton(
-                  title: 'Log In',
-                  onPressed: login,
-                ),
-
+                if (isLoading)
+                  const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                else
+                  AuthButton(
+                    title: 'Log In',
+                    onPressed: login,
+                  ),
                 const SizedBox(height: 25),
-
-                // Divider
                 const Row(
                   children: [
                     Expanded(
@@ -251,17 +294,14 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 18),
-
-                // Google Login Button - No Facebook
                 SizedBox(
                   height: 55,
                   width: double.infinity,
                   child: OutlinedButton(
                     onPressed: () {
                       showMessage(
-                        'Google authentication will be connected soon.',
+                        'Google Sign-In is not configured yet.',
                       );
                     },
                     style: OutlinedButton.styleFrom(
@@ -293,10 +333,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 30),
-
-                // Register Navigation
                 Center(
                   child: Wrap(
                     alignment: WrapAlignment.center,
@@ -326,7 +363,6 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
-
                 const SizedBox(height: 15),
               ],
             ),
