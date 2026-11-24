@@ -33,8 +33,20 @@ class _HomePageState extends State<HomePage> {
           });
         },
       ),
-      const IncomesTab(),
-      const ExpensesTab(),
+      IncomesTab(
+        onNavigateBack: () {
+          setState(() {
+            selectedIndex = 0;
+          });
+        },
+      ),
+      ExpensesTab(
+        onNavigateBack: () {
+          setState(() {
+            selectedIndex = 0;
+          });
+        },
+      ),
       const ReportsTab(),
       const PlaceholderTab(
         title: 'Bills',

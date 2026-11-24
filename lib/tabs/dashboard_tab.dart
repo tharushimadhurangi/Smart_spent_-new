@@ -5,6 +5,8 @@ import '../models/category_model.dart';
 import '../providers/transaction_provider.dart';
 import '../screens/transaction_history_screen.dart';
 import '../screens/edit_transaction_screen.dart';
+import '../screens/add_income_screen.dart';
+import '../screens/add_expense_screen.dart';
 
 class DashboardTab extends StatefulWidget {
   final ValueChanged<int>? onNavigateTab;
@@ -34,7 +36,7 @@ class _DashboardTabState extends State<DashboardTab> {
               return const Center(child: CircularProgressIndicator());
             }
 
-            final recentList = provider.recentTransactions(5);
+            final recentList = provider.recentTransactions(3);
 
             return Stack(
               children: [
@@ -230,7 +232,7 @@ class _DashboardTabState extends State<DashboardTab> {
                     ),
                   ),
                   TextSpan(
-                    text: 'Spent',
+                    text: 'Spend',
                     style: TextStyle(
                       color: Color(0xFFD946EF),
                       fontSize: 18.5,
@@ -324,7 +326,7 @@ class _DashboardTabState extends State<DashboardTab> {
         Row(
           children: const [
             Text(
-              'Hey Samudhi',
+              'Hey Name',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 24,
@@ -364,8 +366,7 @@ class _DashboardTabState extends State<DashboardTab> {
   // 1. PROMINENT BIG AVAILABLE BALANCE CARD (AT TOP)
   Widget _buildBigAvailableBalanceCard(TransactionProvider provider) {
     final balance = provider.availableBalance;
-    final isPositive = balance >= 0;
-
+    
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
@@ -486,32 +487,8 @@ class _DashboardTabState extends State<DashboardTab> {
                     const SizedBox(height: 6),
 
                     // Percentage Growth Pill
-                    Row(
-                      children: [
-                        Icon(
-                          isPositive
-                              ? Icons.north_east_rounded
-                              : Icons.south_east_rounded,
-                          size: 14,
-                          color: isPositive
-                              ? const Color(0xFF34D399)
-                              : const Color(0xFFF87171),
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          isPositive
-                              ? '+12.5% from last month'
-                              : '-4.2% from last month',
-                          style: TextStyle(
-                            color: isPositive
-                                ? const Color(0xFF34D399)
-                                : const Color(0xFFF87171),
-                            fontSize: 11.5,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
+                    
+                    
                   ],
                 ),
               ),
@@ -563,8 +540,17 @@ class _DashboardTabState extends State<DashboardTab> {
 
   // 2. TOTAL INCOME CARD (Glassmorphism with glowing cyan/green wave)
   Widget _buildIncomeCard(TransactionProvider provider) {
-    return Container(
-      height: 106,
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => const AddIncomeScreen(),
+          ),
+        );
+      },
+      child: Container(
+        height: 106,
       decoration: BoxDecoration(
         color: const Color(0xFF0F1B2F),
         borderRadius: BorderRadius.circular(20),
@@ -665,13 +651,23 @@ class _DashboardTabState extends State<DashboardTab> {
           ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 
   // 2. TOTAL EXPENSES CARD (Glassmorphism with glowing pink wave)
   Widget _buildExpenseCard(TransactionProvider provider) {
-    return Container(
-      height: 106,
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => const AddExpenseScreen(),
+          ),
+        );
+      },
+      child: Container(
+        height: 106,
       decoration: BoxDecoration(
         color: const Color(0xFF1F122B),
         borderRadius: BorderRadius.circular(20),
@@ -772,8 +768,9 @@ class _DashboardTabState extends State<DashboardTab> {
           ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 
   // 4. RECENT TRANSACTIONS GLASS PANEL (with internal dividers)
   Widget _buildRecentTransactionsPanel(
