@@ -15,7 +15,8 @@ class TransactionStorage {
       try {
         final List<dynamic> decoded = jsonDecode(jsonStr) as List<dynamic>;
         return decoded
-            .map((item) => TransactionItem.fromJson(item as Map<String, dynamic>))
+            .map((item) =>
+                TransactionItem.fromJson(item as Map<String, dynamic>))
             .toList();
       } catch (e) {
         // Fallback to initial seeds

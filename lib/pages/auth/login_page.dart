@@ -1,3 +1,4 @@
+import '../../auth_gate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -5,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../../theme/app_theme.dart';
 import 'auth_widgets.dart';
 import 'register_page.dart';
+import 'forgot_password_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -36,11 +38,14 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  // Firebase Email and Password Login
   Future<void> login() async {
     if (!_formKey.currentState!.validate()) return;
     if (isLoading) return;
 
-    setState(() => isLoading = true);
+    setState(() {
+      isLoading = true;
+    });
 
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -48,7 +53,17 @@ class _LoginPageState extends State<LoginPage> {
         password: passwordController.text,
       );
 
-      // AuthGate automatically opens HomePage.
+      if (!mounted) return;
+
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (_) => const AuthGate(),
+        ),
+        (route) => false,
+      );
+
+      // AuthGate handles navigation after successful login.
     } on FirebaseAuthException catch (e) {
       String message = 'Login failed. Please try again.';
 
@@ -69,77 +84,21 @@ class _LoginPageState extends State<LoginPage> {
       showMessage('Something went wrong. Please try again.');
     } finally {
       if (mounted) {
-        setState(() => isLoading = false);
+        setState(() {
+          isLoading = false;
+        });
       }
     }
   }
 
-  Future<void> forgotPassword() async {
-    final controller = TextEditingController();
-
-    final email = await showDialog<String>(
-      context: context,
-      builder: (dialogContext) {
-        return AlertDialog(
-          backgroundColor: AppColors.card,
-          title: const Text(
-            'Forgot Password?',
-            style: TextStyle(color: Colors.white),
-          ),
-          content: TextField(
-            controller: controller,
-            keyboardType: TextInputType.emailAddress,
-            style: const TextStyle(color: Colors.white),
-            decoration: const InputDecoration(
-              hintText: 'Enter your email',
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(dialogContext),
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(
-                dialogContext,
-                controller.text.trim(),
-              ),
-              child: const Text('Submit'),
-            ),
-          ],
-        );
-      },
+  // Navigate to Forgot Password Page
+  void forgotPassword() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ForgotPasswordPage(),
+      ),
     );
-
-    // Controller no longer needed after dialog.
-    controller.dispose();
-
-    if (!mounted || email == null) return;
-
-    if (!RegExp(
-      r'^[\w.+-]+@[\w-]+\.[\w.-]+$',
-    ).hasMatch(email)) {
-      showMessage('Please enter a valid email.');
-      return;
-    }
-
-    try {
-      await FirebaseAuth.instance.sendPasswordResetEmail(
-        email: email,
-      );
-
-      showMessage(
-        'If an account exists, a reset email will be sent.',
-      );
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'invalid-email') {
-        showMessage('Invalid email address.');
-      } else {
-        showMessage('Unable to send reset email.');
-      }
-    } catch (e) {
-      showMessage('Unable to send reset email.');
-    }
   }
 
   @override
@@ -157,6 +116,8 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 10),
+
+                // SmartSpend Logo and Branding
                 const Center(
                   child: Column(
                     children: [
@@ -198,7 +159,9 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
+
                 const SizedBox(height: 38),
+
                 const Text(
                   'Log In',
                   style: TextStyle(
@@ -207,7 +170,9 @@ class _LoginPageState extends State<LoginPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+
                 const SizedBox(height: 7),
+
                 const Text(
                   'Welcome back! Please log in to your account.',
                   style: TextStyle(
@@ -215,7 +180,10 @@ class _LoginPageState extends State<LoginPage> {
                     fontSize: 14,
                   ),
                 ),
+
                 const SizedBox(height: 25),
+
+                // Email Field
                 AuthTextField(
                   hint: 'Enter your email',
                   icon: Icons.mail_outline,
@@ -235,7 +203,10 @@ class _LoginPageState extends State<LoginPage> {
                     return null;
                   },
                 ),
+
                 const SizedBox(height: 14),
+
+                // Password Field
                 AuthTextField(
                   hint: 'Enter your password',
                   icon: Icons.lock_outline,
@@ -253,6 +224,8 @@ class _LoginPageState extends State<LoginPage> {
                     return null;
                   },
                 ),
+
+                // Forgot Password
                 Align(
                   alignment: Alignment.centerRight,
                   child: TextButton(
@@ -266,7 +239,10 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
+
                 const SizedBox(height: 8),
+
+                // Login Button
                 if (isLoading)
                   const Center(
                     child: CircularProgressIndicator(),
@@ -276,7 +252,10 @@ class _LoginPageState extends State<LoginPage> {
                     title: 'Log In',
                     onPressed: login,
                   ),
+
                 const SizedBox(height: 25),
+
+                // Divider
                 const Row(
                   children: [
                     Expanded(
@@ -294,7 +273,10 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ],
                 ),
+
                 const SizedBox(height: 18),
+
+                // Google Sign In Button
                 SizedBox(
                   height: 55,
                   width: double.infinity,
@@ -333,7 +315,10 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
+
                 const SizedBox(height: 30),
+
+                // Register Navigation
                 Center(
                   child: Wrap(
                     alignment: WrapAlignment.center,
@@ -363,6 +348,7 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
+
                 const SizedBox(height: 15),
               ],
             ),

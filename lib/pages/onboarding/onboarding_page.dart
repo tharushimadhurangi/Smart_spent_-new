@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../theme/app_theme.dart';
@@ -19,8 +18,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
   final List<Map<String, dynamic>> onboardingData = [
     {
       'title': 'Track Your Spending',
-      'description':
-          'Keep an eye on your income and expenses in one place.',
+      'description': 'Keep an eye on your income and expenses in one place.',
       'icon': Icons.analytics_outlined,
       'color': Color(0xFF9B42FF),
       'secondaryIcon': Icons.account_balance_wallet,

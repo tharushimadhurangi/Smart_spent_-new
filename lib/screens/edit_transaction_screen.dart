@@ -70,7 +70,8 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
     if (!_formKey.currentState!.validate()) return;
 
     final title = _titleController.text.trim();
-    final amount = double.tryParse(_amountController.text.trim().replaceAll(',', ''));
+    final amount =
+        double.tryParse(_amountController.text.trim().replaceAll(',', ''));
     if (amount == null || amount <= 0) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Please enter a valid amount')),
@@ -87,7 +88,8 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
       date: _selectedDate,
     );
 
-    Provider.of<TransactionProvider>(context, listen: false).updateTransaction(updated);
+    Provider.of<TransactionProvider>(context, listen: false)
+        .updateTransaction(updated);
     Navigator.pop(context);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -102,7 +104,8 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
       context: context,
       builder: (dialogCtx) => AlertDialog(
         backgroundColor: const Color(0xFF131A38),
-        title: const Text('Delete Transaction?', style: TextStyle(color: Colors.white)),
+        title: const Text('Delete Transaction?',
+            style: TextStyle(color: Colors.white)),
         content: Text(
           'Are you sure you want to delete "${widget.transaction.title}"?',
           style: const TextStyle(color: Color(0xFF8E9BB5)),
@@ -110,13 +113,16 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogCtx),
-            child: const Text('Cancel', style: TextStyle(color: Color(0xFF8E9BB5))),
+            child: const Text('Cancel',
+                style: TextStyle(color: Color(0xFF8E9BB5))),
           ),
           ElevatedButton(
             onPressed: () {
-              final provider = Provider.of<TransactionProvider>(context, listen: false);
+              final provider =
+                  Provider.of<TransactionProvider>(context, listen: false);
               final deleted = widget.transaction;
-              final originalIndex = provider.transactions.indexWhere((t) => t.id == deleted.id);
+              final originalIndex =
+                  provider.transactions.indexWhere((t) => t.id == deleted.id);
 
               Navigator.pop(dialogCtx); // close dialog
               Navigator.pop(context); // close edit screen
@@ -176,7 +182,8 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.delete_outline_rounded, color: Color(0xFFEF4444)),
+            icon: const Icon(Icons.delete_outline_rounded,
+                color: Color(0xFFEF4444)),
             tooltip: 'Delete',
             onPressed: _confirmDelete,
           ),
@@ -255,7 +262,8 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                     hintStyle: const TextStyle(color: textMuted),
                     filled: true,
                     fillColor: cardDark,
-                    prefixIcon: const Icon(Icons.title_rounded, color: textMuted),
+                    prefixIcon:
+                        const Icon(Icons.title_rounded, color: textMuted),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(16),
                       borderSide: const BorderSide(color: borderDark),
@@ -266,10 +274,13 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(16),
-                      borderSide: const BorderSide(color: Color(0xFF8B5CF6), width: 1.5),
+                      borderSide: const BorderSide(
+                          color: Color(0xFF8B5CF6), width: 1.5),
                     ),
                   ),
-                  validator: (v) => v == null || v.trim().isEmpty ? 'Please enter a title' : null,
+                  validator: (v) => v == null || v.trim().isEmpty
+                      ? 'Please enter a title'
+                      : null,
                 ),
 
                 const SizedBox(height: 16),
@@ -277,18 +288,26 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                 // Amount Input
                 TextFormField(
                   controller: _amountController,
-                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                  style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+                  keyboardType:
+                      const TextInputType.numberWithOptions(decimal: true),
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold),
                   decoration: InputDecoration(
                     hintText: 'Amount',
                     hintStyle: const TextStyle(color: textMuted),
                     filled: true,
                     fillColor: cardDark,
                     prefixIcon: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 14, vertical: 15),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 14, vertical: 15),
                       child: Text(
                         'Amount',
-                        style: TextStyle(color: textMuted, fontWeight: FontWeight.w600, fontSize: 13.5),
+                        style: TextStyle(
+                            color: textMuted,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 13.5),
                       ),
                     ),
                     border: OutlineInputBorder(
@@ -301,10 +320,13 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(16),
-                      borderSide: const BorderSide(color: Color(0xFF8B5CF6), width: 1.5),
+                      borderSide: const BorderSide(
+                          color: Color(0xFF8B5CF6), width: 1.5),
                     ),
                   ),
-                  validator: (v) => v == null || v.trim().isEmpty ? 'Please enter amount' : null,
+                  validator: (v) => v == null || v.trim().isEmpty
+                      ? 'Please enter amount'
+                      : null,
                 ),
 
                 const SizedBox(height: 16),
@@ -318,10 +340,14 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                     filled: true,
                     fillColor: cardDark,
                     prefixIcon: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 14, vertical: 15),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 14, vertical: 15),
                       child: Text(
                         'Category',
-                        style: TextStyle(color: textMuted, fontWeight: FontWeight.w600, fontSize: 13.5),
+                        style: TextStyle(
+                            color: textMuted,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 13.5),
                       ),
                     ),
                     border: OutlineInputBorder(
@@ -334,10 +360,12 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(16),
-                      borderSide: const BorderSide(color: Color(0xFF8B5CF6), width: 1.5),
+                      borderSide: const BorderSide(
+                          color: Color(0xFF8B5CF6), width: 1.5),
                     ),
                   ),
-                  icon: const Icon(Icons.keyboard_arrow_down_rounded, color: textMuted),
+                  icon: const Icon(Icons.keyboard_arrow_down_rounded,
+                      color: textMuted),
                   items: TransactionCategory.allCategories.map((cat) {
                     return DropdownMenuItem<String>(
                       value: cat.id,
@@ -345,7 +373,8 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                         children: [
                           Icon(cat.icon, color: cat.color, size: 18),
                           const SizedBox(width: 8),
-                          Text(cat.name, style: const TextStyle(color: Colors.white)),
+                          Text(cat.name,
+                              style: const TextStyle(color: Colors.white)),
                         ],
                       ),
                     );
@@ -363,7 +392,8 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                 GestureDetector(
                   onTap: _pickDate,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 14, vertical: 16),
                     decoration: BoxDecoration(
                       color: cardDark,
                       borderRadius: BorderRadius.circular(16),
@@ -373,14 +403,19 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                       children: [
                         const Text(
                           'Date',
-                          style: TextStyle(color: textMuted, fontWeight: FontWeight.w600, fontSize: 13.5),
+                          style: TextStyle(
+                              color: textMuted,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 13.5),
                         ),
                         const SizedBox(width: 20),
-                        const Icon(Icons.calendar_month_rounded, color: textMuted, size: 19),
+                        const Icon(Icons.calendar_month_rounded,
+                            color: textMuted, size: 19),
                         const SizedBox(width: 8),
                         Text(
                           widget.transaction.formattedDate,
-                          style: const TextStyle(color: Colors.white, fontSize: 14.5),
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 14.5),
                         ),
                       ],
                     ),
@@ -415,7 +450,8 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.transparent,
                       shadowColor: Colors.transparent,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18)),
                     ),
                     child: const Text(
                       'Update',

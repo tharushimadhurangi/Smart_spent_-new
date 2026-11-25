@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import '../../theme/app_theme.dart';
 import 'auth_widgets.dart';
@@ -51,25 +50,18 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Column(
             children: [
               const AuthBackButton(),
-
               const SizedBox(height: 25),
-
               const AuthHeading(
                 title: 'Create Account',
-                subtitle:
-                    'Join SmartSpend and take control\nof your money.',
+                subtitle: 'Join SmartSpend and take control\nof your money.',
               ),
-
               const SizedBox(height: 35),
-
               const Icon(
                 Icons.assignment_ind_outlined,
                 color: AppColors.secondary,
                 size: 100,
               ),
-
               const SizedBox(height: 25),
-
               AuthTextField(
                 hint: 'Full Name',
                 icon: Icons.person_outline,
@@ -81,9 +73,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   return null;
                 },
               ),
-
               const SizedBox(height: 14),
-
               AuthTextField(
                 hint: 'Email Address',
                 icon: Icons.mail_outline,
@@ -101,9 +91,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   return null;
                 },
               ),
-
               const SizedBox(height: 14),
-
               AuthTextField(
                 hint: 'Password',
                 icon: Icons.lock_outline,
@@ -119,9 +107,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   return null;
                 },
               ),
-
               const SizedBox(height: 14),
-
               AuthTextField(
                 hint: 'Confirm Password',
                 icon: Icons.lock_outline,
@@ -137,16 +123,12 @@ class _RegisterPageState extends State<RegisterPage> {
                   return null;
                 },
               ),
-
               const SizedBox(height: 32),
-
               AuthButton(
                 title: 'Register Account',
                 onPressed: register,
               ),
-
               const SizedBox(height: 28),
-
               Wrap(
                 alignment: WrapAlignment.center,
                 children: [

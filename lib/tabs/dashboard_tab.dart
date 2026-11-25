@@ -143,7 +143,8 @@ class _DashboardTabState extends State<DashboardTab> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (_) => const TransactionHistoryScreen(),
+                                  builder: (_) =>
+                                      const TransactionHistoryScreen(),
                                 ),
                               );
                             },
@@ -366,7 +367,7 @@ class _DashboardTabState extends State<DashboardTab> {
   // 1. PROMINENT BIG AVAILABLE BALANCE CARD (AT TOP)
   Widget _buildBigAvailableBalanceCard(TransactionProvider provider) {
     final balance = provider.availableBalance;
-    
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
@@ -473,7 +474,8 @@ class _DashboardTabState extends State<DashboardTab> {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         _isBalanceVisible
-                            ? TransactionItem.formatCurrency(balance, showDecimals: true)
+                            ? TransactionItem.formatCurrency(balance,
+                                showDecimals: true)
                             : '••••••••',
                         style: const TextStyle(
                           color: Colors.white,
@@ -487,8 +489,6 @@ class _DashboardTabState extends State<DashboardTab> {
                     const SizedBox(height: 6),
 
                     // Percentage Growth Pill
-                    
-                    
                   ],
                 ),
               ),
@@ -551,109 +551,112 @@ class _DashboardTabState extends State<DashboardTab> {
       },
       child: Container(
         height: 106,
-      decoration: BoxDecoration(
-        color: const Color(0xFF0F1B2F),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: const Color(0xFF06B6D4).withValues(alpha: 0.5),
-          width: 1.2,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFF06B6D4).withValues(alpha: 0.15),
-            blurRadius: 14,
-            offset: const Offset(0, 4),
+        decoration: BoxDecoration(
+          color: const Color(0xFF0F1B2F),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: const Color(0xFF06B6D4).withValues(alpha: 0.5),
+            width: 1.2,
           ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: Stack(
-          children: [
-            // Glowing neon wave painter at bottom
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              height: 38,
-              child: CustomPaint(
-                painter: NeonWavePainter(
-                  color: const Color(0xFF10B981),
-                  glowColor: const Color(0xFF06B6D4),
-                ),
-              ),
-            ),
-
-            // Card Content
-            Padding(
-              padding: const EdgeInsets.fromLTRB(12, 14, 12, 12),
-              child: Row(
-                children: [
-                  // Circular Upward Arrow Icon
-                  Container(
-                    width: 38,
-                    height: 38,
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [Color(0xFF10B981), Color(0xFF059669)],
-                      ),
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color(0xFF10B981).withValues(alpha: 0.35),
-                          blurRadius: 8,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: const Icon(
-                      Icons.arrow_upward_rounded,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                  ),
-
-                  const SizedBox(width: 10),
-
-                  // Title and Amount
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          'Total Income',
-                          style: TextStyle(
-                            color: Color(0xFF8E9BB5),
-                            fontSize: 11,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        const SizedBox(height: 3),
-                        FittedBox(
-                          fit: BoxFit.scaleDown,
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            TransactionItem.formatCurrency(provider.totalIncome, showDecimals: true),
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xFF06B6D4).withValues(alpha: 0.15),
+              blurRadius: 14,
+              offset: const Offset(0, 4),
             ),
           ],
         ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Stack(
+            children: [
+              // Glowing neon wave painter at bottom
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                height: 38,
+                child: CustomPaint(
+                  painter: NeonWavePainter(
+                    color: const Color(0xFF10B981),
+                    glowColor: const Color(0xFF06B6D4),
+                  ),
+                ),
+              ),
+
+              // Card Content
+              Padding(
+                padding: const EdgeInsets.fromLTRB(12, 14, 12, 12),
+                child: Row(
+                  children: [
+                    // Circular Upward Arrow Icon
+                    Container(
+                      width: 38,
+                      height: 38,
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [Color(0xFF10B981), Color(0xFF059669)],
+                        ),
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color:
+                                const Color(0xFF10B981).withValues(alpha: 0.35),
+                            blurRadius: 8,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: const Icon(
+                        Icons.arrow_upward_rounded,
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                    ),
+
+                    const SizedBox(width: 10),
+
+                    // Title and Amount
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'Total Income',
+                            style: TextStyle(
+                              color: Color(0xFF8E9BB5),
+                              fontSize: 11,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          const SizedBox(height: 3),
+                          FittedBox(
+                            fit: BoxFit.scaleDown,
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              TransactionItem.formatCurrency(
+                                  provider.totalIncome,
+                                  showDecimals: true),
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 
   // 2. TOTAL EXPENSES CARD (Glassmorphism with glowing pink wave)
   Widget _buildExpenseCard(TransactionProvider provider) {
@@ -668,109 +671,112 @@ class _DashboardTabState extends State<DashboardTab> {
       },
       child: Container(
         height: 106,
-      decoration: BoxDecoration(
-        color: const Color(0xFF1F122B),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: const Color(0xFFF43F5E).withValues(alpha: 0.5),
-          width: 1.2,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFFF43F5E).withValues(alpha: 0.15),
-            blurRadius: 14,
-            offset: const Offset(0, 4),
+        decoration: BoxDecoration(
+          color: const Color(0xFF1F122B),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: const Color(0xFFF43F5E).withValues(alpha: 0.5),
+            width: 1.2,
           ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: Stack(
-          children: [
-            // Glowing neon wave painter at bottom
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              height: 38,
-              child: CustomPaint(
-                painter: NeonWavePainter(
-                  color: const Color(0xFFF43F5E),
-                  glowColor: const Color(0xFFEC4899),
-                ),
-              ),
-            ),
-
-            // Card Content
-            Padding(
-              padding: const EdgeInsets.fromLTRB(12, 14, 12, 12),
-              child: Row(
-                children: [
-                  // Circular Downward Arrow Icon
-                  Container(
-                    width: 38,
-                    height: 38,
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [Color(0xFFF43F5E), Color(0xFFE11D48)],
-                      ),
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color(0xFFF43F5E).withValues(alpha: 0.35),
-                          blurRadius: 8,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: const Icon(
-                      Icons.arrow_downward_rounded,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                  ),
-
-                  const SizedBox(width: 10),
-
-                  // Title and Amount
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          'Total Expenses',
-                          style: TextStyle(
-                            color: Color(0xFF8E9BB5),
-                            fontSize: 11,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        const SizedBox(height: 3),
-                        FittedBox(
-                          fit: BoxFit.scaleDown,
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            TransactionItem.formatCurrency(provider.totalExpenses, showDecimals: true),
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xFFF43F5E).withValues(alpha: 0.15),
+              blurRadius: 14,
+              offset: const Offset(0, 4),
             ),
           ],
         ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Stack(
+            children: [
+              // Glowing neon wave painter at bottom
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                height: 38,
+                child: CustomPaint(
+                  painter: NeonWavePainter(
+                    color: const Color(0xFFF43F5E),
+                    glowColor: const Color(0xFFEC4899),
+                  ),
+                ),
+              ),
+
+              // Card Content
+              Padding(
+                padding: const EdgeInsets.fromLTRB(12, 14, 12, 12),
+                child: Row(
+                  children: [
+                    // Circular Downward Arrow Icon
+                    Container(
+                      width: 38,
+                      height: 38,
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [Color(0xFFF43F5E), Color(0xFFE11D48)],
+                        ),
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color:
+                                const Color(0xFFF43F5E).withValues(alpha: 0.35),
+                            blurRadius: 8,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: const Icon(
+                        Icons.arrow_downward_rounded,
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                    ),
+
+                    const SizedBox(width: 10),
+
+                    // Title and Amount
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            'Total Expenses',
+                            style: TextStyle(
+                              color: Color(0xFF8E9BB5),
+                              fontSize: 11,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          const SizedBox(height: 3),
+                          FittedBox(
+                            fit: BoxFit.scaleDown,
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              TransactionItem.formatCurrency(
+                                  provider.totalExpenses,
+                                  showDecimals: true),
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 
   // 4. RECENT TRANSACTIONS GLASS PANEL (with internal dividers)
   Widget _buildRecentTransactionsPanel(
@@ -840,7 +846,8 @@ class _DashboardTabState extends State<DashboardTab> {
                     );
                   },
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 14),
                     child: Row(
                       children: [
                         // Circular Category Icon with vibrant border & background

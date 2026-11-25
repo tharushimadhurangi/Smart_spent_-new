@@ -95,7 +95,8 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
 
             // Category filter
             if (_categoryFilter != null) {
-              items = items.where((t) => t.categoryId == _categoryFilter).toList();
+              items =
+                  items.where((t) => t.categoryId == _categoryFilter).toList();
             }
 
             // Search query
@@ -123,8 +124,10 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
                         hintStyle: const TextStyle(color: textMuted),
                         filled: true,
                         fillColor: cardDark,
-                        prefixIcon: const Icon(Icons.search, color: textMuted, size: 20),
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                        prefixIcon: const Icon(Icons.search,
+                            color: textMuted, size: 20),
+                        contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 14, vertical: 12),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(14),
                           borderSide: const BorderSide(color: borderDark),
@@ -151,13 +154,15 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
                       _buildPill(
                         label: 'Income',
                         isSelected: _typeFilter == TransactionType.income,
-                        onTap: () => setState(() => _typeFilter = TransactionType.income),
+                        onTap: () => setState(
+                            () => _typeFilter = TransactionType.income),
                       ),
                       const SizedBox(width: 10),
                       _buildPill(
                         label: 'Expense',
                         isSelected: _typeFilter == TransactionType.expense,
-                        onTap: () => setState(() => _typeFilter = TransactionType.expense),
+                        onTap: () => setState(
+                            () => _typeFilter = TransactionType.expense),
                       ),
                     ],
                   ),
@@ -175,7 +180,8 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
                       : ListView.separated(
                           padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
                           itemCount: items.length,
-                          separatorBuilder: (context, index) => const SizedBox(height: 12),
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(height: 12),
                           itemBuilder: (context, index) {
                             final tx = items[index];
                             final cat = tx.category;
@@ -189,7 +195,8 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (_) => EditTransactionScreen(transaction: tx),
+                                    builder: (_) =>
+                                        EditTransactionScreen(transaction: tx),
                                   ),
                                 );
                               },
@@ -201,7 +208,8 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
                                 decoration: BoxDecoration(
                                   color: cardDark,
                                   borderRadius: BorderRadius.circular(18),
-                                  border: Border.all(color: borderDark, width: 1),
+                                  border:
+                                      Border.all(color: borderDark, width: 1),
                                 ),
                                 child: Row(
                                   children: [
@@ -213,7 +221,8 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
                                         color: cat.color.withValues(alpha: 0.2),
                                         shape: BoxShape.circle,
                                         border: Border.all(
-                                          color: cat.color.withValues(alpha: 0.4),
+                                          color:
+                                              cat.color.withValues(alpha: 0.4),
                                           width: 1,
                                         ),
                                       ),
@@ -229,7 +238,8 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
                                     // Title & Date
                                     Expanded(
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             tx.title,
@@ -295,14 +305,11 @@ class _TransactionHistoryScreenState extends State<TransactionHistoryScreen> {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected
-              ? const Color(0xFF8B5CF6)
-              : const Color(0xFF131A38),
+          color: isSelected ? const Color(0xFF8B5CF6) : const Color(0xFF131A38),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: isSelected
-                ? const Color(0xFF8B5CF6)
-                : const Color(0xFF232D56),
+            color:
+                isSelected ? const Color(0xFF8B5CF6) : const Color(0xFF232D56),
           ),
         ),
         child: Text(

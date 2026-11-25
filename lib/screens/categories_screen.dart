@@ -21,8 +21,11 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       builder: (dialogCtx) => StatefulBuilder(
         builder: (ctx, setDialogState) => AlertDialog(
           backgroundColor: const Color(0xFF131A38),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          title: const Text('Add Category', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          title: const Text('Add Category',
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -43,7 +46,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                       selected: selectedType == TransactionType.expense,
                       selectedColor: const Color(0xFFF43F5E),
                       onSelected: (val) {
-                        setDialogState(() => selectedType = TransactionType.expense);
+                        setDialogState(
+                            () => selectedType = TransactionType.expense);
                       },
                     ),
                   ),
@@ -54,7 +58,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                       selected: selectedType == TransactionType.income,
                       selectedColor: const Color(0xFF10B981),
                       onSelected: (val) {
-                        setDialogState(() => selectedType = TransactionType.income);
+                        setDialogState(
+                            () => selectedType = TransactionType.income);
                       },
                     ),
                   ),
@@ -65,7 +70,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(dialogCtx),
-              child: const Text('Cancel', style: TextStyle(color: Color(0xFF8E9BB5))),
+              child: const Text('Cancel',
+                  style: TextStyle(color: Color(0xFF8E9BB5))),
             ),
             ElevatedButton(
               onPressed: () {
@@ -128,7 +134,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   builder: (context, provider, _) {
                     return GridView.builder(
                       itemCount: categories.length,
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 14,
                         mainAxisSpacing: 14,
@@ -228,7 +235,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 ),
                 child: ElevatedButton.icon(
                   onPressed: _showAddCategoryDialog,
-                  icon: const Icon(Icons.add_rounded, color: Colors.white, size: 20),
+                  icon: const Icon(Icons.add_rounded,
+                      color: Colors.white, size: 20),
                   label: const Text(
                     'Add Category',
                     style: TextStyle(
@@ -240,7 +248,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.transparent,
                     shadowColor: Colors.transparent,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18)),
                   ),
                 ),
               ),

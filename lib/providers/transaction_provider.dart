@@ -110,7 +110,8 @@ class TransactionProvider extends ChangeNotifier {
       case TimePeriodFilter.thisMonth:
         final firstOfMonth = DateTime(now.year, now.month, 1);
         return items.where((t) {
-          return t.date.isAfter(firstOfMonth.subtract(const Duration(seconds: 1)));
+          return t.date
+              .isAfter(firstOfMonth.subtract(const Duration(seconds: 1)));
         }).toList();
 
       case TimePeriodFilter.allTime:
@@ -120,7 +121,8 @@ class TransactionProvider extends ChangeNotifier {
 
   // Weekly expenses for budget pacing card
   double get currentWeekExpenses {
-    final weekItems = filterByPeriod(expenseTransactions, TimePeriodFilter.thisWeek);
+    final weekItems =
+        filterByPeriod(expenseTransactions, TimePeriodFilter.thisWeek);
     return weekItems.fold(0.0, (sum, t) => sum + t.amount);
   }
 
@@ -170,7 +172,8 @@ class TransactionProvider extends ChangeNotifier {
     await TransactionStorage.saveTransactions(_transactions);
   }
 
-  Future<void> restoreTransaction(TransactionItem item, int originalIndex) async {
+  Future<void> restoreTransaction(
+      TransactionItem item, int originalIndex) async {
     if (originalIndex >= 0 && originalIndex <= _transactions.length) {
       _transactions.insert(originalIndex, item);
     } else {

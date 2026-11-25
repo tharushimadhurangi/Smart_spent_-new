@@ -1,8 +1,8 @@
-
 import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../theme/app_theme.dart';
+import '../../widget/smartspend_logo.dart';
 import 'onboarding_page.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -13,20 +13,28 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  Timer? _timer;
+
   @override
   void initState() {
     super.initState();
 
-    Timer(const Duration(seconds: 3), () {
+    _timer = Timer(const Duration(seconds: 3), () {
       if (!mounted) return;
 
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (_) => const OnboardingPage(),
+          builder: (context) => const OnboardingPage(),
         ),
       );
     });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -35,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: AppColors.background,
       body: Stack(
         children: [
-          // Top Purple Decoration
+          // Top purple decoration
           Positioned(
             top: -100,
             right: -100,
@@ -54,7 +62,7 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
           ),
 
-          // Bottom Purple Decoration
+          // Bottom purple decoration
           Positioned(
             bottom: -120,
             left: -80,
@@ -68,19 +76,19 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
           ),
 
-          // Main Content
+          // Main content
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(
-                  Icons.account_balance_wallet_outlined,
-                  size: 90,
-                  color: AppColors.secondary,
+                // SmartSpend Logo
+                const SmartSpendLogo(
+                  size: 110,
                 ),
 
                 const SizedBox(height: 20),
 
+                // App name
                 const Text.rich(
                   TextSpan(
                     children: [
@@ -106,6 +114,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
                 const SizedBox(height: 8),
 
+                // Tagline
                 const Text(
                   'Manage • Save • Optimize',
                   style: TextStyle(
@@ -116,6 +125,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
                 const SizedBox(height: 65),
 
+                // Loading indicator
                 const SizedBox(
                   width: 35,
                   height: 35,

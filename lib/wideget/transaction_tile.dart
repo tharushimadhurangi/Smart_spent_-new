@@ -18,8 +18,7 @@ class TransactionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final cardColor =
-        Theme.of(context).cardTheme.color ??
+    final cardColor = Theme.of(context).cardTheme.color ??
         Theme.of(context).colorScheme.surface;
     final textColor = Theme.of(context).colorScheme.onSurface;
     final mutedColor = isDark ? AppColors.mutedText : const Color(0xFF65708A);

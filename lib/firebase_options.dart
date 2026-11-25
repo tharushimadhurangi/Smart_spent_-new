@@ -63,7 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '379828525214',
     projectId: 'smartspent-2026',
     storageBucket: 'smartspent-2026.firebasestorage.app',
-    iosClientId: '379828525214-om1dj8p3uuh6nvul8bfucnf2c0vv4b54.apps.googleusercontent.com',
+    iosClientId:
+        '379828525214-om1dj8p3uuh6nvul8bfucnf2c0vv4b54.apps.googleusercontent.com',
     iosBundleId: 'com.example.smartSpentNew',
   );
 
@@ -73,7 +74,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '379828525214',
     projectId: 'smartspent-2026',
     storageBucket: 'smartspent-2026.firebasestorage.app',
-    iosClientId: '379828525214-om1dj8p3uuh6nvul8bfucnf2c0vv4b54.apps.googleusercontent.com',
+    iosClientId:
+        '379828525214-om1dj8p3uuh6nvul8bfucnf2c0vv4b54.apps.googleusercontent.com',
     iosBundleId: 'com.example.smartSpentNew',
   );
 

@@ -1,3 +1,4 @@
+
 name: smart_spent_new
 description: A Flutter expense management application
 publish_to: 'none'
@@ -26,3 +27,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/images/

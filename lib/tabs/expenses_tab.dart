@@ -23,8 +23,18 @@ class _ExpensesTabState extends State<ExpensesTab> {
 
   String _formatDate(DateTime dt) {
     const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec'
     ];
     final month = months[dt.month - 1];
     final day = dt.day.toString().padLeft(2, '0');
@@ -277,7 +287,9 @@ class _ExpensesTabState extends State<ExpensesTab> {
 
                 // Amount
                 Text(
-                  _isExpenseVisible ? _formatLKR(provider.totalExpenses) : '••••••••',
+                  _isExpenseVisible
+                      ? _formatLKR(provider.totalExpenses)
+                      : '••••••••',
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 26,
@@ -611,7 +623,8 @@ class _ExpensesTabState extends State<ExpensesTab> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (_) => EditTransactionScreen(transaction: item),
+                        builder: (_) =>
+                            EditTransactionScreen(transaction: item),
                       ),
                     );
                   },
@@ -669,7 +682,8 @@ class _ExpenseBackgroundWavesPainter extends CustomPainter {
         colors: [Color(0xFF3B0764), Color(0xFF240642), Colors.transparent],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
-      ).createShader(Rect.fromLTWH(0, 0, size.width * 0.85, size.height * 0.35));
+      ).createShader(
+          Rect.fromLTWH(0, 0, size.width * 0.85, size.height * 0.35));
 
     final path1 = Path();
     path1.moveTo(0, 0);
@@ -691,7 +705,8 @@ class _ExpenseBackgroundWavesPainter extends CustomPainter {
         colors: [Color(0xFF2E0854), Colors.transparent],
         begin: Alignment.topRight,
         end: Alignment.bottomLeft,
-      ).createShader(Rect.fromLTWH(size.width * 0.4, 0, size.width * 0.6, size.height * 0.2));
+      ).createShader(Rect.fromLTWH(
+          size.width * 0.4, 0, size.width * 0.6, size.height * 0.2));
 
     final path2 = Path();
     path2.moveTo(size.width * 0.45, 0);
@@ -713,7 +728,8 @@ class _ExpenseBackgroundWavesPainter extends CustomPainter {
         colors: [Color(0xFF2C0A52), Color(0xFF16032B)],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-      ).createShader(Rect.fromLTWH(0, size.height * 0.82, size.width, size.height * 0.18));
+      ).createShader(
+          Rect.fromLTWH(0, size.height * 0.82, size.width, size.height * 0.18));
 
     final path3 = Path();
     path3.moveTo(0, size.height * 0.88);

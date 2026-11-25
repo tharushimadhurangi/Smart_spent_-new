@@ -45,7 +45,9 @@ class TransactionItem {
     final isNegative = val < 0;
     final absVal = val.abs();
 
-    final parts = (showDecimals ? absVal.toStringAsFixed(2) : absVal.round().toString()).split('.');
+    final parts =
+        (showDecimals ? absVal.toStringAsFixed(2) : absVal.round().toString())
+            .split('.');
     final integerPart = parts[0];
     final decimalPart = parts.length > 1 ? parts[1] : '';
 
@@ -59,7 +61,8 @@ class TransactionItem {
       }
     }
     final formattedInt = buffer.toString().split('').reversed.join('');
-    final fullNumber = decimalPart.isNotEmpty ? '$formattedInt.$decimalPart' : formattedInt;
+    final fullNumber =
+        decimalPart.isNotEmpty ? '$formattedInt.$decimalPart' : formattedInt;
 
     if (showSign) {
       if (isIncome) {
@@ -86,8 +89,18 @@ class TransactionItem {
   // Matches "Nov 05, 2026" from screenshot
   String get formattedDate {
     const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec'
     ];
     final monthStr = months[date.month - 1];
     final dayStr = date.day.toString().padLeft(2, '0');
@@ -152,7 +165,8 @@ class TransactionItem {
   }
 
   factory TransactionItem.fromJson(Map<String, dynamic> json) {
-    final desc = (json['description'] as String?) ?? (json['title'] as String?) ?? '';
+    final desc =
+        (json['description'] as String?) ?? (json['title'] as String?) ?? '';
     return TransactionItem(
       id: json['id'] as String,
       userId: (json['userId'] as String?) ?? 'default_user',

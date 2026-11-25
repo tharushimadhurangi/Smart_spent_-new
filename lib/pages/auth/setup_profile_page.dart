@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import '../../theme/app_theme.dart';
 import 'auth_widgets.dart';
@@ -93,14 +92,11 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
           child: Column(
             children: [
               const AuthBackButton(),
-
               const AuthHeading(
                 title: 'Set Up Profile',
                 subtitle: 'Tell us a little about yourself.',
               ),
-
               const SizedBox(height: 28),
-
               Stack(
                 children: [
                   const CircleAvatar(
@@ -139,9 +135,7 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
                   ),
                 ],
               ),
-
               const SizedBox(height: 28),
-
               AuthTextField(
                 hint: 'Full Name',
                 icon: Icons.person_outline,
@@ -153,9 +147,7 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
                   return null;
                 },
               ),
-
               const SizedBox(height: 14),
-
               AuthTextField(
                 hint: 'Contact Number',
                 icon: Icons.phone_outlined,
@@ -171,9 +163,7 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
                   return null;
                 },
               ),
-
               const SizedBox(height: 14),
-
               InkWell(
                 onTap: selectDate,
                 borderRadius: BorderRadius.circular(15),
@@ -197,8 +187,8 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
                           birthDate == null
                               ? 'Date of Birth'
                               : '${birthDate!.day.toString().padLeft(2, '0')}/'
-                                '${birthDate!.month.toString().padLeft(2, '0')}/'
-                                '${birthDate!.year}',
+                                  '${birthDate!.month.toString().padLeft(2, '0')}/'
+                                  '${birthDate!.year}',
                           style: const TextStyle(
                             color: AppColors.mutedText,
                           ),
@@ -212,9 +202,7 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
                   ),
                 ),
               ),
-
               const SizedBox(height: 14),
-
               Container(
                 height: 56,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -259,9 +247,7 @@ class _SetupProfilePageState extends State<SetupProfilePage> {
                   ),
                 ),
               ),
-
               const SizedBox(height: 35),
-
               AuthButton(
                 title: 'Continue',
                 onPressed: continueProfile,

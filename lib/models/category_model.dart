@@ -102,15 +102,18 @@ class TransactionCategory {
     ),
   ];
 
-  static List<TransactionCategory> get incomeCategories =>
-      predefinedCategories.where((c) => c.type == TransactionType.income).toList();
+  static List<TransactionCategory> get incomeCategories => predefinedCategories
+      .where((c) => c.type == TransactionType.income)
+      .toList();
 
-  static List<TransactionCategory> get expenseCategories =>
-      predefinedCategories.where((c) => c.type == TransactionType.expense).toList();
+  static List<TransactionCategory> get expenseCategories => predefinedCategories
+      .where((c) => c.type == TransactionType.expense)
+      .toList();
 
   static List<TransactionCategory> get allCategories => predefinedCategories;
 
-  static TransactionCategory getById(String id, [TransactionType? fallbackType]) {
+  static TransactionCategory getById(String id,
+      [TransactionType? fallbackType]) {
     final found = predefinedCategories.where((c) => c.id == id);
     if (found.isNotEmpty) return found.first;
 

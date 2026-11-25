@@ -46,8 +46,18 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
 
   String _formatDate(DateTime dt) {
     const months = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec'
     ];
     final month = months[dt.month - 1];
     final day = dt.day.toString().padLeft(2, '0');
@@ -122,7 +132,8 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
               ...TransactionCategory.incomeCategories.map((cat) {
                 final isSelected = cat.id == _selectedCategoryId;
                 return ListTile(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                   leading: Container(
                     width: 40,
                     height: 40,
@@ -136,14 +147,19 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                     cat.name,
                     style: TextStyle(
                       color: Colors.white,
-                      fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                      fontWeight:
+                          isSelected ? FontWeight.bold : FontWeight.w500,
                     ),
                   ),
                   trailing: isSelected
-                      ? const Icon(Icons.check_circle_rounded, color: Color(0xFFD946EF))
+                      ? const Icon(Icons.check_circle_rounded,
+                          color: Color(0xFFD946EF))
                       : null,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-                  tileColor: isSelected ? const Color(0xFF2E1B5B).withValues(alpha: 0.5) : null,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14)),
+                  tileColor: isSelected
+                      ? const Color(0xFF2E1B5B).withValues(alpha: 0.5)
+                      : null,
                   onTap: () {
                     setState(() => _selectedCategoryId = cat.id);
                     Navigator.pop(ctx);
@@ -198,7 +214,8 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                 final icon = pm['icon'] as IconData;
                 final isSelected = name == _selectedPaymentMethod;
                 return ListTile(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                   leading: Container(
                     width: 40,
                     height: 40,
@@ -212,14 +229,19 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                     name,
                     style: TextStyle(
                       color: Colors.white,
-                      fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                      fontWeight:
+                          isSelected ? FontWeight.bold : FontWeight.w500,
                     ),
                   ),
                   trailing: isSelected
-                      ? const Icon(Icons.check_circle_rounded, color: Color(0xFFD946EF))
+                      ? const Icon(Icons.check_circle_rounded,
+                          color: Color(0xFFD946EF))
                       : null,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-                  tileColor: isSelected ? const Color(0xFF2E1B5B).withValues(alpha: 0.5) : null,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14)),
+                  tileColor: isSelected
+                      ? const Color(0xFF2E1B5B).withValues(alpha: 0.5)
+                      : null,
                   onTap: () {
                     setState(() => _selectedPaymentMethod = name);
                     Navigator.pop(ctx);
@@ -238,7 +260,8 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
     if (!_formKey.currentState!.validate()) return;
 
     final title = _titleController.text.trim();
-    final amount = double.tryParse(_amountController.text.trim().replaceAll(',', ''));
+    final amount =
+        double.tryParse(_amountController.text.trim().replaceAll(',', ''));
     if (amount == null || amount <= 0) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -259,7 +282,8 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
       paymentMethod: _selectedPaymentMethod,
     );
 
-    Provider.of<TransactionProvider>(context, listen: false).addTransaction(newTx);
+    Provider.of<TransactionProvider>(context, listen: false)
+        .addTransaction(newTx);
     Navigator.pop(context);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -376,7 +400,8 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
               children: [
                 // Top Action Bar (Back Button & Home Button)
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -387,10 +412,12 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                           width: 44,
                           height: 44,
                           decoration: BoxDecoration(
-                            color: const Color(0xFF28154F).withValues(alpha: 0.8),
+                            color:
+                                const Color(0xFF28154F).withValues(alpha: 0.8),
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: const Color(0xFF581C87).withValues(alpha: 0.5),
+                              color: const Color(0xFF581C87)
+                                  .withValues(alpha: 0.5),
                               width: 1,
                             ),
                           ),
@@ -404,15 +431,18 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
 
                       // Home Button
                       GestureDetector(
-                        onTap: () => Navigator.of(context).popUntil((route) => route.isFirst),
+                        onTap: () => Navigator.of(context)
+                            .popUntil((route) => route.isFirst),
                         child: Container(
                           width: 44,
                           height: 44,
                           decoration: BoxDecoration(
-                            color: const Color(0xFF28154F).withValues(alpha: 0.8),
+                            color:
+                                const Color(0xFF28154F).withValues(alpha: 0.8),
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: const Color(0xFF581C87).withValues(alpha: 0.5),
+                              color: const Color(0xFF581C87)
+                                  .withValues(alpha: 0.5),
                               width: 1,
                             ),
                           ),
@@ -431,7 +461,8 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                 Expanded(
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
                     child: Form(
                       key: _formKey,
                       child: Column(
@@ -499,8 +530,9 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                                   fontWeight: FontWeight.normal,
                                 ),
                               ),
-                              validator: (v) =>
-                                  v == null || v.trim().isEmpty ? 'Please enter a title' : null,
+                              validator: (v) => v == null || v.trim().isEmpty
+                                  ? 'Please enter a title'
+                                  : null,
                             ),
                           ),
 
@@ -519,7 +551,9 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                             label: 'Amount',
                             content: TextFormField(
                               controller: _amountController,
-                              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                              keyboardType:
+                                  const TextInputType.numberWithOptions(
+                                      decimal: true),
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 15,
@@ -538,9 +572,12 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                                 ),
                               ),
                               validator: (v) {
-                                if (v == null || v.trim().isEmpty) return 'Please enter amount';
-                                final val = double.tryParse(v.trim().replaceAll(',', ''));
-                                if (val == null || val <= 0) return 'Enter a valid amount';
+                                if (v == null || v.trim().isEmpty)
+                                  return 'Please enter amount';
+                                final val = double.tryParse(
+                                    v.trim().replaceAll(',', ''));
+                                if (val == null || val <= 0)
+                                  return 'Enter a valid amount';
                                 return null;
                               },
                             ),
@@ -643,7 +680,8 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                               borderRadius: BorderRadius.circular(28),
                               boxShadow: [
                                 BoxShadow(
-                                  color: const Color(0xFFD946EF).withValues(alpha: 0.45),
+                                  color: const Color(0xFFD946EF)
+                                      .withValues(alpha: 0.45),
                                   blurRadius: 18,
                                   offset: const Offset(0, 6),
                                 ),
@@ -661,7 +699,8 @@ class _AddIncomeScreenState extends State<AddIncomeScreen> {
                               child: const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.save_rounded, color: Colors.white, size: 22),
+                                  Icon(Icons.save_rounded,
+                                      color: Colors.white, size: 22),
                                   SizedBox(width: 8),
                                   Text(
                                     'Save Income',
@@ -701,7 +740,8 @@ class _PurpleWavesBackgroundPainter extends CustomPainter {
         colors: [Color(0xFF3B0764), Color(0xFF240642), Colors.transparent],
         begin: Alignment.topLeft,
         end: Alignment.bottomRight,
-      ).createShader(Rect.fromLTWH(0, 0, size.width * 0.85, size.height * 0.45));
+      ).createShader(
+          Rect.fromLTWH(0, 0, size.width * 0.85, size.height * 0.45));
 
     final path1 = Path();
     path1.moveTo(0, 0);
@@ -723,7 +763,8 @@ class _PurpleWavesBackgroundPainter extends CustomPainter {
         colors: [Color(0xFF2E0854), Colors.transparent],
         begin: Alignment.topRight,
         end: Alignment.bottomLeft,
-      ).createShader(Rect.fromLTWH(size.width * 0.4, 0, size.width * 0.6, size.height * 0.25));
+      ).createShader(Rect.fromLTWH(
+          size.width * 0.4, 0, size.width * 0.6, size.height * 0.25));
 
     final path2 = Path();
     path2.moveTo(size.width * 0.45, 0);
@@ -745,7 +786,8 @@ class _PurpleWavesBackgroundPainter extends CustomPainter {
         colors: [Color(0xFF2E0854), Colors.transparent],
         begin: Alignment.centerLeft,
         end: Alignment.centerRight,
-      ).createShader(Rect.fromLTWH(0, size.height * 0.25, size.width * 0.5, size.height * 0.35));
+      ).createShader(Rect.fromLTWH(
+          0, size.height * 0.25, size.width * 0.5, size.height * 0.35));
 
     final path3 = Path();
     path3.moveTo(0, size.height * 0.25);
@@ -766,7 +808,8 @@ class _PurpleWavesBackgroundPainter extends CustomPainter {
         colors: [Color(0xFF28064B), Colors.transparent],
         begin: Alignment.centerRight,
         end: Alignment.centerLeft,
-      ).createShader(Rect.fromLTWH(size.width * 0.5, size.height * 0.45, size.width * 0.5, size.height * 0.35));
+      ).createShader(Rect.fromLTWH(size.width * 0.5, size.height * 0.45,
+          size.width * 0.5, size.height * 0.35));
 
     final path4 = Path();
     path4.moveTo(size.width, size.height * 0.45);
@@ -787,7 +830,8 @@ class _PurpleWavesBackgroundPainter extends CustomPainter {
         colors: [Color(0xFF2C0A52), Color(0xFF16032B)],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-      ).createShader(Rect.fromLTWH(0, size.height * 0.8, size.width, size.height * 0.2));
+      ).createShader(
+          Rect.fromLTWH(0, size.height * 0.8, size.width, size.height * 0.2));
 
     final path5 = Path();
     path5.moveTo(0, size.height * 0.88);

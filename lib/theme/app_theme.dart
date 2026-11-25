@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class AppColors {
@@ -23,9 +22,8 @@ class AppTheme {
       ValueNotifier<ThemeMode>(ThemeMode.dark);
 
   static void toggleTheme() {
-    themeMode.value = themeMode.value == ThemeMode.dark
-        ? ThemeMode.light
-        : ThemeMode.dark;
+    themeMode.value =
+        themeMode.value == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
   }
 
   static const LinearGradient primaryGradient = LinearGradient(
@@ -44,7 +42,6 @@ class AppTheme {
       scaffoldBackgroundColor: AppColors.background,
       primaryColor: AppColors.primary,
       fontFamily: 'Roboto',
-
       colorScheme: const ColorScheme.dark(
         primary: AppColors.primary,
         secondary: AppColors.secondary,
@@ -53,13 +50,11 @@ class AppTheme {
         onPrimary: Colors.white,
         onSurface: AppColors.text,
       ),
-
       appBarTheme: const AppBarTheme(
         backgroundColor: AppColors.background,
         foregroundColor: AppColors.text,
         elevation: 0,
       ),
-
       cardTheme: CardThemeData(
         color: AppColors.card,
         elevation: 0,
@@ -68,7 +63,6 @@ class AppTheme {
           side: const BorderSide(color: AppColors.border),
         ),
       ),
-
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.input,
@@ -94,7 +88,6 @@ class AppTheme {
           ),
         ),
       ),
-
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
@@ -105,21 +98,17 @@ class AppTheme {
           ),
         ),
       ),
-
       navigationBarTheme: const NavigationBarThemeData(
         backgroundColor: AppColors.card,
         indicatorColor: Color(0xFF352064),
       ),
-
       dividerTheme: const DividerThemeData(
         color: AppColors.border,
         thickness: 1,
       ),
-
       iconTheme: const IconThemeData(
         color: AppColors.mutedText,
       ),
-
       textTheme: const TextTheme(
         headlineLarge: TextStyle(
           color: AppColors.text,
@@ -152,7 +141,6 @@ class AppTheme {
       scaffoldBackgroundColor: lightBackground,
       primaryColor: AppColors.primary,
       fontFamily: 'Roboto',
-
       colorScheme: const ColorScheme.light(
         primary: AppColors.primary,
         secondary: AppColors.secondary,
@@ -161,13 +149,11 @@ class AppTheme {
         onPrimary: Colors.white,
         onSurface: lightText,
       ),
-
       appBarTheme: const AppBarTheme(
         backgroundColor: lightBackground,
         foregroundColor: lightText,
         elevation: 0,
       ),
-
       cardTheme: CardThemeData(
         color: lightCard,
         elevation: 0,
@@ -176,7 +162,6 @@ class AppTheme {
           side: const BorderSide(color: lightBorder),
         ),
       ),
-
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: const Color(0xFFF0F2F8),
@@ -202,7 +187,6 @@ class AppTheme {
           ),
         ),
       ),
-
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
@@ -213,19 +197,15 @@ class AppTheme {
           ),
         ),
       ),
-
       navigationBarTheme: const NavigationBarThemeData(
         backgroundColor: lightCard,
         indicatorColor: Color(0xFFE9DFFF),
       ),
-
       dividerTheme: const DividerThemeData(
         color: lightBorder,
         thickness: 1,
       ),
-
       iconTheme: const IconThemeData(color: lightMuted),
-
       textTheme: const TextTheme(
         headlineLarge: TextStyle(
           color: lightText,

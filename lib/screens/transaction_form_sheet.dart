@@ -165,10 +165,12 @@ class _TransactionFormSheetState extends State<TransactionFormSheet> {
     if (!_formKey.currentState!.validate()) return;
 
     final title = _titleController.text.trim();
-    final amount = double.tryParse(_amountController.text.trim().replaceAll(',', ''));
+    final amount =
+        double.tryParse(_amountController.text.trim().replaceAll(',', ''));
     if (amount == null || amount <= 0) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter a valid amount greater than 0')),
+        const SnackBar(
+            content: Text('Please enter a valid amount greater than 0')),
       );
       return;
     }
@@ -344,9 +346,10 @@ class _TransactionFormSheetState extends State<TransactionFormSheet> {
                               Text(
                                 'Expense',
                                 style: TextStyle(
-                                  color: _selectedType == TransactionType.expense
-                                      ? Colors.white
-                                      : mutedColor,
+                                  color:
+                                      _selectedType == TransactionType.expense
+                                          ? Colors.white
+                                          : mutedColor,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 14,
                                 ),
@@ -414,7 +417,8 @@ class _TransactionFormSheetState extends State<TransactionFormSheet> {
               const SizedBox(height: 8),
               TextFormField(
                 controller: _amountController,
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
                 style: TextStyle(
                   color: textColor,
                   fontSize: 22,
@@ -445,7 +449,8 @@ class _TransactionFormSheetState extends State<TransactionFormSheet> {
                   if (val == null || val.trim().isEmpty) {
                     return 'Please enter amount';
                   }
-                  final parsed = double.tryParse(val.trim().replaceAll(',', ''));
+                  final parsed =
+                      double.tryParse(val.trim().replaceAll(',', ''));
                   if (parsed == null || parsed <= 0) {
                     return 'Enter a valid positive number';
                   }
@@ -508,7 +513,8 @@ class _TransactionFormSheetState extends State<TransactionFormSheet> {
                 child: ListView.separated(
                   scrollDirection: Axis.horizontal,
                   itemCount: categories.length,
-                  separatorBuilder: (context, index) => const SizedBox(width: 10),
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(width: 10),
                   itemBuilder: (context, index) {
                     final cat = categories[index];
                     final isSelected = cat.id == _selectedCategoryId;

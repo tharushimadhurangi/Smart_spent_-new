@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import '../../theme/app_theme.dart';
 import 'auth_widgets.dart';
@@ -40,15 +39,12 @@ class _CredentialsPageState extends State<CredentialsPage> {
         child: Column(
           children: [
             const AuthBackButton(),
-
             const AuthHeading(
               title: 'Add Credentials',
               subtitle:
                   'Link your financial accounts to track\nyour expenses and manage your budget.',
             ),
-
             const SizedBox(height: 35),
-
             Container(
               height: 175,
               width: double.infinity,
@@ -59,32 +55,24 @@ class _CredentialsPageState extends State<CredentialsPage> {
                 color: AppColors.secondary,
               ),
             ),
-
             const SizedBox(height: 20),
-
             _accountOption(
               icon: Icons.account_balance,
               title: 'Add Bank Account',
               value: 'Bank Account',
             ),
-
             const SizedBox(height: 15),
-
             _accountOption(
               icon: Icons.credit_card,
               title: 'Add Credit / Debit Card',
               value: 'Credit / Debit Card',
             ),
-
             const SizedBox(height: 40),
-
             AuthButton(
               title: 'Next',
               onPressed: finishSetup,
             ),
-
             const SizedBox(height: 12),
-
             TextButton(
               onPressed: () {
                 Navigator.popUntil(
@@ -125,9 +113,7 @@ class _CredentialsPageState extends State<CredentialsPage> {
           color: AppColors.input,
           borderRadius: BorderRadius.circular(18),
           border: Border.all(
-            color: isSelected
-                ? AppColors.secondary
-                : AppColors.border,
+            color: isSelected ? AppColors.secondary : AppColors.border,
             width: isSelected ? 2 : 1,
           ),
         ),
@@ -150,12 +136,8 @@ class _CredentialsPageState extends State<CredentialsPage> {
               ),
             ),
             Icon(
-              isSelected
-                  ? Icons.check_circle
-                  : Icons.arrow_forward_ios,
-              color: isSelected
-                  ? AppColors.secondary
-                  : Colors.white,
+              isSelected ? Icons.check_circle : Icons.arrow_forward_ios,
+              color: isSelected ? AppColors.secondary : Colors.white,
               size: 19,
             ),
           ],
